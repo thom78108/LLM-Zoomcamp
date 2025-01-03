@@ -10,11 +10,12 @@ from sentence_transformers import SentenceTransformer
 
 ELASTIC_URL = os.getenv("ELASTIC_URL", "http://elasticsearch:9200")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://ollama:11434/v1/")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your-api-key-here")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "my_api_key")
 
 
 es_client = Elasticsearch(ELASTIC_URL)
-ollama_client = OpenAI(base_url=OLLAMA_URL, api_key="ollama")
+ollama_client = OpenAI(base_url=OLLAMA_URL, api_key=os.getenv("OLLAMA_API_KEY", "my_api_key"))
+#ollama_client = OpenAI(base_url=OLLAMA_URL, api_key="ollama")
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 model = SentenceTransformer("multi-qa-MiniLM-L6-cos-v1")
