@@ -4,7 +4,7 @@ from psycopg2.extras import DictCursor
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-tz = ZoneInfo("Europe/Berlin")
+tz = ZoneInfo("Europe/Paris")
 
 
 def get_db_connection():
