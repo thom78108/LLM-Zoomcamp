@@ -8,12 +8,20 @@ tz = ZoneInfo("Europe/Paris")
 
 
 def get_db_connection():
-    return psycopg2.connect(
-        host=os.getenv("POSTGRES_HOST", "postgres"),
-        database=os.getenv("POSTGRES_DB", "course_assistant"),
-        user=os.getenv("POSTGRES_USER", "your_username"),
-        password=os.getenv("POSTGRES_PASSWORD", "your_password"),
-    )
+    retries = 5
+    while retries > 0:
+        try:
+            return psycopg2.connect(
+                host=os.getenv("POSTGRES_HOST", "postgres"),
+                database=os.getenv("POSTGRES_DB", "course_assistant"),
+                user=os.getenv("POSTGRES_USER", "your_username"),
+                password=os.getenv("POSTGRES_PASSWORD", "your_password"),
+            )
+        except psycopg2.OperationalError as e:
+            retries -= 1
+            if retries == 0:
+                raise e
+            time.sleep(5)
 
 
 def init_db():
