@@ -3,9 +3,9 @@ import psycopg2
 from psycopg2.extras import DictCursor
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import time 
 
 tz = ZoneInfo("Europe/Paris")
-
 
 def get_db_connection():
     retries = 5
@@ -22,7 +22,6 @@ def get_db_connection():
             if retries == 0:
                 raise e
             time.sleep(5)
-
 
 def init_db():
     conn = get_db_connection()
