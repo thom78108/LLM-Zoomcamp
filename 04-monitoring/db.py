@@ -4,18 +4,24 @@ from psycopg2.extras import DictCursor
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import time 
+from dotenv import load_dotenv
 
 tz = ZoneInfo("Europe/Paris")
 
 def get_db_connection():
+    load_dotenv()
     retries = 5
     while retries > 0:
         try:
             return psycopg2.connect(
                 host=os.getenv("POSTGRES_HOST", "postgres"),
                 database=os.getenv("POSTGRES_DB", "course_assistant"),
-                user=os.getenv("POSTGRES_USER", "your_username"),
+                user=os.getenv("POSTGRES_USR", "your_username"),
                 password=os.getenv("POSTGRES_PASSWORD", "your_password"),
+                #host="postgres",
+                #database="course_assistant",
+                #user="your_username",
+                #password="your_password",
             )
         except psycopg2.OperationalError as e:
             retries -= 1
